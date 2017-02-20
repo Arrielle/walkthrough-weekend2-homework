@@ -1,12 +1,64 @@
+var currentIndex = 0;
+var phiShoutouts = [];
 $(document).ready(function(){
 
-    // Upon page load, get the data from the server
-    $.ajax({
-      type: "GET",
-      url: "/data",
-      success: function(data){
-        // yay! we have data!
-        console.log('returned data from server: ', data);
-      }
-    });
-});
+  // Upon page load, get the data from the server
+  $.ajax({
+    type: "GET",
+    url: "/data",
+    success: function(data){
+      // yay! we have data!
+      console.log('returned data from server: ', data);
+      phiShoutouts = data.phirephiters;
+      console.log("Here is my array: ", phiShoutouts);
+
+      displayShoutout(currentIndex);
+
+      phiShoutouts.forEach(function(shoutout, index){
+        var $point = $('<span>&Phi;</span>');
+
+        if(index === 0) {
+          $point.addClass('active');
+        }
+        $($point).css("margin", "5px");
+        $('#points').append($point);
+      }); // ends for each
+      buttonFunctionality();
+    } // ends success function
+  });// ends ajax request
+});// ends doc ready
+
+function buttonFunctionality(){
+  $('#next').on('click', function (){
+    console.log('NEXT Button Clicked');
+    if(currentIndex === phiShoutouts.length -1){
+      currentIndex = 0;
+    } else {
+    currentIndex++;
+  }
+    displayShoutout(currentIndex);
+    updateActivePointer(currentIndex);
+  }); //ends NEXT onclick
+
+  $('#prev').on('click', function (){
+    console.log('PREV Button Clicked');
+    if (currentIndex <= 0) {
+      currentIndex = phiShoutouts.length -1
+    } else {
+    currentIndex--;
+    }
+    displayShoutout(currentIndex);
+    updateActivePointer(currentIndex);
+  }); // ends PREV onclick
+}
+
+function displayShoutout (index) {
+  $('#name').text(phiShoutouts[index].name);
+  $('#username').text(phiShoutouts[index].git_username);
+  $('#shoutout').text(phiShoutouts[index].shoutout);
+}
+
+function updateActivePointer (index) {
+  $('.active').removeClass('active');
+  $('#points').children().eq(index).addClass('active');
+}

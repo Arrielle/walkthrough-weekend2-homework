@@ -1,0 +1,38 @@
+
+
+.active {
+  color: goldenrod;
+  /*margin: 5px;*/
+}
+
+.nav {
+  background-color: white;
+  /*border: 2px solid black;*/
+  font-size: 48px;
+  /*width: 100px;
+  margin: 40px;*/
+}
+
+.container {
+  display: flex;
+  flex-flow: wrap;
+
+}
+
+#next, #prev, #shoutouts {
+float: left;
+flex: 1 auto;
+text-align: center;
+}
+
+#points, h1 {
+  /*clear: both;
+  display: block;
+  margin: auto;*/
+  text-align: center;
+  flex: 1 100%;
+}
+/*
+h1 {
+text-align: center;
+}*/
