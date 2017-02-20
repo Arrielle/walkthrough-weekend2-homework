@@ -1,5 +1,7 @@
 var currentIndex = 0;
 var phiShoutouts = [];
+var intervalID = null;
+
 $(document).ready(function(){
 
   // Upon page load, get the data from the server
@@ -7,12 +9,13 @@ $(document).ready(function(){
     type: "GET",
     url: "/data",
     success: function(data){
-      // yay! we have data!
-      console.log('returned data from server: ', data);
+      // // yay! we have data!
+      // console.log('returned data from server: ', data);
       phiShoutouts = data.phirephiters;
-      console.log("Here is my array: ", phiShoutouts);
 
       displayShoutout(currentIndex);
+      startTimer();
+
 
       phiShoutouts.forEach(function(shoutout, index){
         var $point = $('<span>&Phi;</span>');
@@ -28,6 +31,9 @@ $(document).ready(function(){
   });// ends ajax request
 });// ends doc ready
 
+function startTimer(index){
+  intervalID = setInterval(nextShoutout, 3000);
+}
 
 function displayShoutout (index) {
   $('#name').text(phiShoutouts[index].name);
@@ -51,22 +57,35 @@ function updateActivePointer (index) {
 
 function buttonFunctionality(){
   $('#next').on('click', function (){
-    if(currentIndex === phiShoutouts.length -1){
-      currentIndex = 0;
-    } else {
-    currentIndex++;
-  }
-    fadeShoutout(currentIndex);
-    updateActivePointer(currentIndex);
-  }); //ends NEXT onclick
+    clearInterval(intervalID);
+    nextShoutout(currentIndex);
+    startTimer(currentIndex);
+  });
 
   $('#prev').on('click', function (){
-    if (currentIndex <= 0) {
-      currentIndex = phiShoutouts.length -1
-    } else {
+    clearInterval(intervalID);
+    nextShoutout(currentIndex);
+    startTimer(currentIndex);
+  });
+}
+
+function nextShoutout(index) {
+  if(currentIndex === phiShoutouts.length -1){
+    currentIndex = 0;
+  } else {
+    currentIndex++;
+  }
+  fadeShoutout(currentIndex);
+  updateActivePointer(currentIndex);
+  //ends NEXT onclick
+}
+
+function prevShoutout(index) {
+  if (currentIndex <= 0) {
+    currentIndex = phiShoutouts.length -1
+  } else {
     currentIndex--;
-    }
-    fadeShoutout(currentIndex);
-    updateActivePointer(currentIndex);
-  }); // ends PREV onclick
+  }
+  fadeShoutout(currentIndex);
+  updateActivePointer(currentIndex);
 }
