@@ -30,7 +30,6 @@ $(document).ready(function(){
 
 function buttonFunctionality(){
   $('#next').on('click', function (){
-    console.log('NEXT Button Clicked');
     if(currentIndex === phiShoutouts.length -1){
       currentIndex = 0;
     } else {
@@ -41,7 +40,6 @@ function buttonFunctionality(){
   }); //ends NEXT onclick
 
   $('#prev').on('click', function (){
-    console.log('PREV Button Clicked');
     if (currentIndex <= 0) {
       currentIndex = phiShoutouts.length -1
     } else {
@@ -55,6 +53,7 @@ function buttonFunctionality(){
 function displayShoutout (index) {
   $('#name').text(phiShoutouts[index].name);
   $('#username').text(phiShoutouts[index].git_username);
+  $('#username').attr('href', '//www.github.com/' + phiShoutouts[index].git_username);
   $('#shoutout').text(phiShoutouts[index].shoutout);
 }
 
