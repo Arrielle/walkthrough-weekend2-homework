@@ -28,6 +28,27 @@ $(document).ready(function(){
   });// ends ajax request
 });// ends doc ready
 
+
+function displayShoutout (index) {
+  $('#name').text(phiShoutouts[index].name);
+  $('#username').text(phiShoutouts[index].git_username);
+  $('#username').attr('href', '//www.github.com/' + phiShoutouts[index].git_username);
+  $('#shoutout').text(phiShoutouts[index].shoutout);
+}
+
+function fadeShoutout (index) {
+  $('#shoutouts').fadeOut('slow', function (){
+    displayShoutout(index);
+  });
+  $('#shoutouts').fadeIn('slow');
+}
+
+function updateActivePointer (index) {
+  $('.active').removeClass('active');
+  $('#points').children().eq(index).addClass('active');
+}
+
+
 function buttonFunctionality(){
   $('#next').on('click', function (){
     if(currentIndex === phiShoutouts.length -1){
@@ -35,7 +56,7 @@ function buttonFunctionality(){
     } else {
     currentIndex++;
   }
-    displayShoutout(currentIndex);
+    fadeShoutout(currentIndex);
     updateActivePointer(currentIndex);
   }); //ends NEXT onclick
 
@@ -45,19 +66,7 @@ function buttonFunctionality(){
     } else {
     currentIndex--;
     }
-    displayShoutout(currentIndex);
+    fadeShoutout(currentIndex);
     updateActivePointer(currentIndex);
   }); // ends PREV onclick
-}
-
-function displayShoutout (index) {
-  $('#name').text(phiShoutouts[index].name);
-  $('#username').text(phiShoutouts[index].git_username);
-  $('#username').attr('href', '//www.github.com/' + phiShoutouts[index].git_username);
-  $('#shoutout').text(phiShoutouts[index].shoutout);
-}
-
-function updateActivePointer (index) {
-  $('.active').removeClass('active');
-  $('#points').children().eq(index).addClass('active');
 }
